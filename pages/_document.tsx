@@ -8,6 +8,14 @@ export default function Document() {
         href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
         rel="stylesheet"
       />
+      <script
+        src="https://kit.fontawesome.com/82bdbf861b.js"
+        crossOrigin="anonymous"
+      ></script>
+      <script
+        src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"
+        crossOrigin="anonymous"
+      ></script>
       <body>
         <Main />
         <NextScript />
