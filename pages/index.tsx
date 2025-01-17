@@ -1,24 +1,24 @@
 import Head from "next/head";
 import Layout from "@/components/organisms/Layout";
 import { useCallback, useEffect, useState } from "react";
-import { userType } from "@/services/data-types/user-type";
-import { userService } from "@/services/user-service";
 import Button from "@/components/atoms/Button";
+import { studentType } from "@/services/data-types/student-type";
+import { studentService } from "@/services/student-service";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
-  const [users, setUsers] = useState<userType[]>([]);
+  const [student, setStudent] = useState<studentType[]>([]);
 
-  const getUser = useCallback(async () => {
+  const getStudent = useCallback(async () => {
     setIsLoading(true);
 
     try {
-      const response = await userService();
+      const response = await studentService();
 
       if (response.error) {
         alert(response.message);
       } else {
-        setUsers(response.data);
+        setStudent(response.data);
       }
     } catch (error) {
       console.log(error);
@@ -28,8 +28,8 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    getUser();
-  }, [getUser]);
+    getStudent();
+  }, [getStudent]);
 
   return (
     <>
@@ -41,18 +41,18 @@ export default function Home() {
       </Head>
       <Layout>
         <div className="container-fluid px-4">
-          <h1 className="mt-4">Users</h1>
+          <h1 className="mt-4">Student</h1>
           <ol className="breadcrumb mb-4">
-            <li className="breadcrumb-item active">Users</li>
+            <li className="breadcrumb-item active">Student</li>
           </ol>
           <div className="card mb-4">
             <div className="card-header">
               <i className="fas fa-table me-1"></i>
-              Data Users{" "}
+              Data Student{" "}
               <div className="d-flex justify-content-end gap-1">
                 <Button
                   type="button"
-                  onClickButton={getUser}
+                  onClickButton={getStudent}
                   isLoading={isLoading}
                   className={["btn btn-primary btn-sm"]}
                 >
@@ -72,17 +72,25 @@ export default function Home() {
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Nama</th>
-                    <th scope="col">Birthdate</th>
+                    <th scope="col">NIS</th>
+                    <th scope="col">Student</th>
+                    <th scope="col">Gender</th>
+                    <th scope="col">Grade</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Year Mlebet</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {users.map((item: userType, index) => (
+                  {student.map((item: studentType, index) => (
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
-                      <td>{item.name}</td>
-                      <td>{item.birthdate}</td>
+                      <td>{item.nis}</td>
+                      <td>{item.nama_siswa}</td>
+                      <td>{item.jekel}</td>
+                      <td>{item.grade}</td>
+                      <td>{item.status}</td>
+                      <td>{item.th_masuk}</td>
                       <td>
                         <Button
                           type="button"
