@@ -21,3 +21,22 @@ export async function studentServiceStore(data: FormData) {
     data,
   });
 }
+
+export async function studentServiceEdit(id: string) {
+  const url = `${ROOT_API}/${API_VERSION}/student/${id}/edit`;
+
+  return callAPI({
+    url,
+    method: "GET",
+  });
+}
+
+export async function studentServiceUpdate(data: FormData, id: string) {
+  const url = `${ROOT_API}/${API_VERSION}/student/${id}`;
+
+  return callAPI({
+    url,
+    method: "PUT",
+    data,
+  });
+}

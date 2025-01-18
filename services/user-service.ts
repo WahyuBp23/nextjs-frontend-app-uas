@@ -12,6 +12,7 @@ export async function userService() {
     isToken: true,
   });
 }
+
 export async function userServiceStore(data: FormData) {
   const url = `${ROOT_API}/${API_VERSION}/users`;
 
@@ -19,5 +20,33 @@ export async function userServiceStore(data: FormData) {
     url,
     method: "POST",
     data,
+  });
+}
+
+export async function userServiceEdit(id: string) {
+  const url = `${ROOT_API}/${API_VERSION}/users/${id}/edit`;
+
+  return callAPI({
+    url,
+    method: "GET",
+  });
+}
+
+export async function userServiceUpdate(data: FormData, id: string) {
+  const url = `${ROOT_API}/${API_VERSION}/users/${id}`;
+
+  return callAPI({
+    url,
+    method: "PUT",
+    data,
+  });
+}
+
+export async function userServiceDestroy(id: string) {
+  const url = `${ROOT_API}/${API_VERSION}/users/${id}`;
+
+  return callAPI({
+    url,
+    method: "DELETE",
   });
 }
