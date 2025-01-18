@@ -60,7 +60,7 @@ export default function Home() {
                 </Button>
                 <Button
                   type="link"
-                  href="/user/create"
+                  href="/student/create"
                   className={["btn btn-primary btn-sm me-2"]}
                 >
                   Tambah Data
@@ -88,7 +88,7 @@ export default function Home() {
                       <td>{item.nis}</td>
                       <td>{item.nama_siswa}</td>
                       <td>{item.jekel}</td>
-                      <td>{item.grade}</td>
+                      <td>{item.grade_id}</td>
                       <td>{item.status}</td>
                       <td>{item.th_masuk}</td>
                       <td>
@@ -103,7 +103,7 @@ export default function Home() {
                         </Button>
                         <Button
                           type="link"
-                          href={`user/edit/${item.id}`}
+                          href={`student/edit/${item.id}`}
                           className={["btn btn-warning btn-sm me-2"]}
                         >
                           Update

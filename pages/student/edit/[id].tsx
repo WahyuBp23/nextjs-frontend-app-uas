@@ -1,23 +1,27 @@
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
-import { userType } from "@/services/data-types/user-type";
+import { studentType } from "@/services/data-types/student-type";
+import { studentServiceUpdate } from "@/services/student-service";
 import { userServiceEdit, userServiceUpdate } from "@/services/user-service";
 import React, { useState } from "react";
 
-export default function EditUser({
-  userDetail,
+export default function EditStudent({
+  studentDetail,
   id,
 }: {
-  userDetail: userType;
+  studentDetail: studentType;
   id: string;
 }) {
-  const [datas, setDatas] = useState<userType>(userDetail);
+  const [datas, setDatas] = useState<studentType>(studentDetail);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState({
-    name: "",
-    email: "",
-    birthdate: "",
+    nis: "",
+    nama_siswa: "",
+    jekel: "",
+    grade_id: "",
+    status: "",
+    th_masuk: "",
   });
 
   const onSubmit = async () => {
@@ -25,14 +29,17 @@ export default function EditUser({
 
     try {
       const data = new FormData();
-      data.append("name", datas.name);
-      data.append("email", datas.email || "");
-      data.append("birthdate", datas.birthdate || "");
+      data.append("nis", datas.nis);
+      data.append("nama_siswa", datas.nama_siswa);
+      data.append("jekel", datas.jekel);
+      data.append("grade_id", datas.grade_id);
+      data.append("status", datas.status);
+      data.append("th_masuk", datas.th_masuk);
 
-      const response = await userServiceUpdate(data, id);
+      const response = await studentServiceUpdate(data, id);
 
       if (!response.error) {
-        alert("User created unccessfully");
+        alert("Student created unccessfully");
         // router.push('/user');
       } else {
         if (response.message) {
@@ -54,62 +61,123 @@ export default function EditUser({
     <>
       <Layout>
         <div className="container-fluid px-4">
-          <h1 className="mt-4">Users</h1>
+          <h1 className="mt-4">Students</h1>
           <ol className="breadcrumb mb-4">
-            <li className="breadcrumb-item">Users</li>
-            <li className="breadcrumb-item active">Tambah data</li>
+            <li className="breadcrumb-item">Students</li>
+            <li className="breadcrumb-item active">Update data</li>
           </ol>
-
           <div className="card-body">
             <form action="">
               <div className="row">
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputName" className="form-label">
-                      Nama
+                    <label htmlFor="inputNIS" className="form-label">
+                      NIS
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="inputNIS"
+                      placeholder={studentDetail.nis}
+                      value={datas.nis}
+                      onChange={(e) =>
+                        setDatas({ ...datas, nis: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="col-sm-6 mb-4">
+                  <div className="mb-3">
+                    <label htmlFor="inputNamaSiswa" className="form-label">
+                      Nama Siswa
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      id="inputName"
-                      placeholder={userDetail.name}
-                      value={datas.name}
+                      id="inputNamaSiswa"
+                      placeholder={studentDetail.nama_siswa}
+                      value={datas.nama_siswa}
                       onChange={(e) =>
-                        setDatas({ ...datas, name: e.target.value })
+                        setDatas({ ...datas, nama_siswa: e.target.value })
                       }
                     />
                   </div>
                 </div>
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputEmail" className="form-label">
-                      Alamat Email
+                    <label htmlFor="inputJekel" className="form-label">
+                      Jenis Kelamin
                     </label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="inputEmail"
-                      placeholder={userDetail.email}
-                      value={datas.email}
+                    <select
+                      className="form-select"
+                      id="inputJekel"
+                      value={datas.jekel}
                       onChange={(e) =>
-                        setDatas({ ...datas, email: e.target.value })
+                        setDatas({ ...datas, jekel: e.target.value })
                       }
-                    />
+                    >
+                      <option value="">Pilih Jenis Kelamin</option>
+                      <option value="LK">Laki-laki</option>
+                      <option value="PR">Perempuan</option>
+                    </select>
                   </div>
                 </div>
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputBirthdate" className="form-label">
-                      Birthdate
+                    <label htmlFor="inputGrade" className="form-label">
+                      Grade
+                    </label>
+                    <select
+                      className="form-select"
+                      id="inputGrade"
+                      value={datas.grade_id}
+                      onChange={(e) =>
+                        setDatas({ ...datas, grade_id: e.target.value })
+                      }
+                    >
+                      <option value="">Pilih Grade</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="col-sm-6 mb-4">
+                  <div className="mb-3">
+                    <label htmlFor="inputStatus" className="form-label">
+                      Status
+                    </label>
+                    <select
+                      className="form-select"
+                      id="inputStatus"
+                      value={datas.status}
+                      onChange={(e) =>
+                        setDatas({ ...datas, status: e.target.value })
+                      }
+                    >
+                      <option value="">Pilih Status</option>
+                      <option value="Aktif">Aktif</option>
+                      <option value="Lulus">Lulus</option>
+                      <option value="Pindah">Pindah</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="col-sm-6 mb-4">
+                  <div className="mb-3">
+                    <label htmlFor="inputTahunMasuk" className="form-label">
+                      Tahun Masuk
                     </label>
                     <input
-                      type="date"
+                      type="number"
                       className="form-control"
-                      id="inputBirthdate"
-                      placeholder=""
-                      value={datas.birthdate}
+                      id="inputTahunMasuk"
+                      placeholder="Tahun Masuk"
+                      value={datas.th_masuk}
                       onChange={(e) =>
-                        setDatas({ ...datas, birthdate: e.target.value })
+                        setDatas({ ...datas, th_masuk: e.target.value })
                       }
                     />
                   </div>
