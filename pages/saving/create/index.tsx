@@ -1,20 +1,26 @@
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
+import { savingType } from "@/services/data-types/saving-type";
 import { userType } from "@/services/data-types/user-type";
+import { savingServiceStore } from "@/services/saving-service";
 import { userServiceStore } from "@/services/user-service";
 import React, { useState } from "react";
 
-export default function CreateUser() {
-  const [datas, setDatas] = useState<userType>({
-    name: "",
-    email: "",
-    birthdate: "",
+export default function CreateSaving() {
+  const [datas, setDatas] = useState<savingType>({
+    student_id: "",
+    setor: "",
+    tarik: "",
+    tgl: "",
+    jenis: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState({
-    name: "",
-    email: "",
-    birthdate: "",
+    student_id: "",
+    setor: "",
+    tarik: "",
+    tgl: "",
+    jenis: "",
   });
 
   const onSubmit = async () => {
@@ -22,14 +28,16 @@ export default function CreateUser() {
 
     try {
       const data = new FormData();
-      data.append("name", datas.name);
-      data.append("email", datas.email || "");
-      data.append("birthdate", datas.birthdate || "");
+      data.append("student_id", datas.student_id);
+      data.append("setor", datas.setor);
+      data.append("tarik", datas.tarik);
+      data.append("tgl", datas.tgl);
+      data.append("jenis", datas.jenis);
 
-      const response = await userServiceStore(data);
+      const response = await savingServiceStore(data);
 
       if (!response.error) {
-        alert("User created unccessfully");
+        alert("Saving created unccessfully");
         // router.push('/user');
       } else {
         if (response.message) {
@@ -51,9 +59,9 @@ export default function CreateUser() {
     <>
       <Layout>
         <div className="container-fluid px-4">
-          <h1 className="mt-4">Users</h1>
+          <h1 className="mt-4">Saving</h1>
           <ol className="breadcrumb mb-4">
-            <li className="breadcrumb-item">Users</li>
+            <li className="breadcrumb-item">Saving</li>
             <li className="breadcrumb-item active">Tambah data</li>
           </ol>
 
@@ -62,53 +70,88 @@ export default function CreateUser() {
               <div className="row">
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputName" className="form-label">
-                      Nama
+                    <label htmlFor="inputStudentId" className="form-label">
+                      ID Siswa
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      id="inputName"
-                      placeholder="name"
-                      value={datas.name}
+                      id="inputStudentId"
+                      placeholder="ID Siswa"
+                      value={datas.student_id}
                       onChange={(e) =>
-                        setDatas({ ...datas, name: e.target.value })
+                        setDatas({ ...datas, student_id: e.target.value })
                       }
                     />
                   </div>
                 </div>
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputEmail" className="form-label">
-                      Alamat Email
+                    <label htmlFor="inputSetor" className="form-label">
+                      Setor
                     </label>
                     <input
-                      type="email"
+                      type="number"
                       className="form-control"
-                      id="inputEmail"
-                      placeholder="name@example.com"
-                      value={datas.email}
+                      id="inputSetor"
+                      placeholder="Jumlah Setor"
+                      value={datas.setor}
                       onChange={(e) =>
-                        setDatas({ ...datas, email: e.target.value })
+                        setDatas({ ...datas, setor: e.target.value })
                       }
                     />
                   </div>
                 </div>
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputBirthdate" className="form-label">
-                      Birthdate
+                    <label htmlFor="inputTarik" className="form-label">
+                      Tarik
+                    </label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="inputTarik"
+                      placeholder="Jumlah Tarik"
+                      value={datas.tarik}
+                      onChange={(e) =>
+                        setDatas({ ...datas, tarik: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="col-sm-6 mb-4">
+                  <div className="mb-3">
+                    <label htmlFor="inputTgl" className="form-label">
+                      Tanggal
                     </label>
                     <input
                       type="date"
                       className="form-control"
-                      id="inputBirthdate"
-                      placeholder=""
-                      value={datas.birthdate}
+                      id="inputTgl"
+                      value={datas.tgl}
                       onChange={(e) =>
-                        setDatas({ ...datas, birthdate: e.target.value })
+                        setDatas({ ...datas, tgl: e.target.value })
                       }
                     />
+                  </div>
+                </div>
+                <div className="col-sm-6 mb-4">
+                  <div className="mb-3">
+                    <label htmlFor="inputJenis" className="form-label">
+                      Jenis
+                    </label>
+                    <select
+                      className="form-control"
+                      id="inputJenis"
+                      value={datas.jenis}
+                      onChange={(e) =>
+                        setDatas({ ...datas, jenis: e.target.value })
+                      }
+                    >
+                      <option value="">Pilih Jenis</option>
+                      <option value="SR">Setor</option>
+                      <option value="TR">Tarik</option>
+                    </select>
                   </div>
                 </div>
               </div>
