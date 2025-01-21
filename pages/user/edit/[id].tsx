@@ -110,7 +110,7 @@ export default function EditUser({
                       type="password"
                       className="form-control"
                       id="inputPassword"
-                      placeholder=""
+                      placeholder={userDetail.password}
                       value={datas.password}
                       onChange={(e) =>
                         setDatas({ ...datas, password: e.target.value })
@@ -127,7 +127,7 @@ export default function EditUser({
                       type="password"
                       className="form-control"
                       id="inputKonfirmPw"
-                      placeholder=""
+                      placeholder={userDetail.password_verified_at}
                       value={datas.password_verified_at}
                       onChange={(e) =>
                         setDatas({

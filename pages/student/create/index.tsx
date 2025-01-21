@@ -1,7 +1,6 @@
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
 import { studentType } from "@/services/data-types/student-type";
-import { userType } from "@/services/data-types/user-type";
 import { studentServiceStore } from "@/services/student-service";
 import React, { useState } from "react";
 
@@ -79,7 +78,7 @@ export default function CreateStudent() {
                       type="number"
                       className="form-control"
                       id="inputNIS"
-                      placeholder="NIS"
+                      placeholder="nis"
                       value={datas.nis}
                       onChange={(e) =>
                         setDatas({ ...datas, nis: e.target.value })

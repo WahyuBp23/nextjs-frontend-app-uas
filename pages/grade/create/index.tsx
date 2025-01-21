@@ -1,19 +1,18 @@
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
 import { studentType } from "@/services/data-types/student-type";
-import { studentServiceEdit } from "@/services/student-service";
-import { studentServiceUpdate } from "@/services/student-service";
+import { studentServiceStore } from "@/services/student-service";
 import React, { useState } from "react";
 
-export default function EditStudent({
-  studentDetail,
-  id,
-}: {
-  studentDetail: studentType;
-  id: string;
-}) {
-  const [datas, setDatas] = useState<studentType>(studentDetail);
-
+export default function CreateStudent() {
+  const [datas, setDatas] = useState<studentType>({
+    nis: "",
+    nama_siswa: "",
+    jekel: "",
+    grade_id: "",
+    status: "",
+    th_masuk: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState({
     nis: "",
@@ -36,7 +35,7 @@ export default function EditStudent({
       data.append("status", datas.status);
       data.append("th_masuk", datas.th_masuk);
 
-      const response = await studentServiceUpdate(data, id);
+      const response = await studentServiceStore(data);
 
       if (!response.error) {
         alert("Student created unccessfully");
@@ -64,8 +63,9 @@ export default function EditStudent({
           <h1 className="mt-4">Students</h1>
           <ol className="breadcrumb mb-4">
             <li className="breadcrumb-item">Students</li>
-            <li className="breadcrumb-item active">Update data</li>
+            <li className="breadcrumb-item active">Tambah data</li>
           </ol>
+
           <div className="card-body">
             <form action="">
               <div className="row">
@@ -78,7 +78,7 @@ export default function EditStudent({
                       type="number"
                       className="form-control"
                       id="inputNIS"
-                      placeholder={studentDetail.nis}
+                      placeholder="NIS"
                       value={datas.nis}
                       onChange={(e) =>
                         setDatas({ ...datas, nis: e.target.value })
@@ -95,7 +95,7 @@ export default function EditStudent({
                       type="text"
                       className="form-control"
                       id="inputNamaSiswa"
-                      placeholder={studentDetail.nama_siswa}
+                      placeholder="Nama Siswa"
                       value={datas.nama_siswa}
                       onChange={(e) =>
                         setDatas({ ...datas, nama_siswa: e.target.value })
@@ -196,23 +196,4 @@ export default function EditStudent({
       </Layout>
     </>
   );
-}
-
-interface GetServerSideProps {
-  params: {
-    id: string;
-  };
-}
-
-export async function getServerSideProps({ params }: GetServerSideProps) {
-  const { id } = params;
-
-  const response = await studentServiceEdit(id);
-
-  return {
-    props: {
-      studentDetail: response.data,
-      id: id,
-    },
-  };
 }
