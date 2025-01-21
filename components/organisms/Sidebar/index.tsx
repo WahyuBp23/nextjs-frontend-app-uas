@@ -18,12 +18,28 @@ export default function Sidebar() {
                 </div>
                 Student
               </Button>
+              <Button type="link" className={["nav-link"]} href="/grade">
+                <div className="sb-nav-link-icon">
+                  <i className="fa-book"></i>
+                </div>
+                Grade
+              </Button>
               <div className="sb-sidenav-menu-heading">Transaksi</div>
-              <Button type="link" className={["nav-link"]} href="/saving">
+              <Button type="link" className={["nav-link"]} href="/saving/setor">
                 <div className="sb-nav-link-icon">
                   <i className="fa-lightning"></i>
                 </div>
-                Saving
+                Setor
+              </Button>
+              <Button
+                type="link"
+                className={["nav-link"]}
+                href="/saving/tariks"
+              >
+                <div className="sb-nav-link-icon">
+                  <i className="fa-book"></i>
+                </div>
+                Tarik
               </Button>
               <div className="sb-sidenav-menu-heading">Setting</div>
               <Button type="link" className={["nav-link"]} href="/user">
