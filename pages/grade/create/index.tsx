@@ -1,17 +1,16 @@
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
 import { gradeType } from "@/services/data-types/grade-type";
-import { studentType } from "@/services/data-types/student-type";
-import { studentServiceStore } from "@/services/student-service";
+import { gradeServiceStore } from "@/services/grade-service";
 import React, { useState } from "react";
 
 export default function CreateGrade() {
   const [datas, setDatas] = useState<gradeType>({
-    grade_id: "",
+    grade: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState({
-    grade_id: "",
+    grade: "",
   });
 
   const onSubmit = async () => {
@@ -19,9 +18,9 @@ export default function CreateGrade() {
 
     try {
       const data = new FormData();
-      data.append("grade_id", datas.grade_id);
+      data.append("grade", datas.grade);
 
-      const response = await studentServiceStore(data);
+      const response = await gradeServiceStore(data);
 
       if (!response.error) {
         alert("Grade created unccessfully");
@@ -46,9 +45,9 @@ export default function CreateGrade() {
     <>
       <Layout>
         <div className="container-fluid px-4">
-          <h1 className="mt-4">Students</h1>
+          <h1 className="mt-4">Grade</h1>
           <ol className="breadcrumb mb-4">
-            <li className="breadcrumb-item">Students</li>
+            <li className="breadcrumb-item">Grade</li>
             <li className="breadcrumb-item active">Tambah data</li>
           </ol>
 
@@ -60,22 +59,16 @@ export default function CreateGrade() {
                     <label htmlFor="inputGrade" className="form-label">
                       Grade
                     </label>
-                    <select
-                      className="form-select"
+                    <input
+                      type="text"
+                      className="form-control"
                       id="inputGrade"
-                      value={datas.grade_id}
+                      placeholder="Grade"
+                      value={datas.grade}
                       onChange={(e) =>
-                        setDatas({ ...datas, grade_id: e.target.value })
+                        setDatas({ ...datas, grade: e.target.value })
                       }
-                    >
-                      <option value="">Pilih Grade</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                    </select>
+                    />
                   </div>
                 </div>
               </div>

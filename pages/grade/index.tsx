@@ -9,7 +9,7 @@ export default function Grades() {
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState<gradeType[]>([]);
 
-  const getUser = useCallback(async () => {
+  const getGrade = useCallback(async () => {
     setIsLoading(true);
 
     try {
@@ -28,8 +28,8 @@ export default function Grades() {
   }, []);
 
   useEffect(() => {
-    getUser();
-  }, [getUser]);
+    getGrade();
+  }, [getGrade]);
 
   return (
     <>
@@ -52,7 +52,7 @@ export default function Grades() {
               <div className="d-flex justify-content-end gap-1">
                 <Button
                   type="button"
-                  onClickButton={getUser}
+                  onClickButton={getGrade}
                   isLoading={isLoading}
                   className={["btn btn-primary btn-sm"]}
                 >
@@ -60,7 +60,7 @@ export default function Grades() {
                 </Button>
                 <Button
                   type="link"
-                  href="/user/create"
+                  href="/grade/create"
                   className={["btn btn-primary btn-sm me-2"]}
                 >
                   Tambah Data
