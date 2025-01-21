@@ -93,7 +93,7 @@ export default function Grades() {
                         </Button>
                         <Button
                           type="link"
-                          href={`user/edit/${item.id}`}
+                          href={`grade/edit/${item.id}`}
                           className={["btn btn-warning btn-sm me-2"]}
                         >
                           Update

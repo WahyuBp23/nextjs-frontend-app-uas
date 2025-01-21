@@ -11,12 +11,7 @@ export default function CreateGrade() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState({
-    nis: "",
-    nama_siswa: "",
-    jekel: "",
     grade_id: "",
-    status: "",
-    th_masuk: "",
   });
 
   const onSubmit = async () => {
@@ -29,7 +24,7 @@ export default function CreateGrade() {
       const response = await studentServiceStore(data);
 
       if (!response.error) {
-        alert("Student created unccessfully");
+        alert("Grade created unccessfully");
         // router.push('/user');
       } else {
         if (response.message) {
