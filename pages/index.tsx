@@ -111,7 +111,7 @@ export default function Home() {
                         <Button
                           type="link"
                           // onClickButton={
-                          //   () => handleDetele(item.id)
+                          //   () => handleDelete(item.id)
                           // }
                           className={["btn btn-danger btn-sm me-2"]}
                         >
