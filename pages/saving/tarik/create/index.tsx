@@ -74,7 +74,7 @@ export default function CreateSaving() {
                       ID Siswa
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       id="inputStudentId"
                       placeholder="ID Siswa"
