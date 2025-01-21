@@ -1,17 +1,13 @@
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
+import { gradeType } from "@/services/data-types/grade-type";
 import { studentType } from "@/services/data-types/student-type";
 import { studentServiceStore } from "@/services/student-service";
 import React, { useState } from "react";
 
-export default function CreateStudent() {
-  const [datas, setDatas] = useState<studentType>({
-    nis: "",
-    nama_siswa: "",
-    jekel: "",
+export default function CreateGrade() {
+  const [datas, setDatas] = useState<gradeType>({
     grade_id: "",
-    status: "",
-    th_masuk: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState({
@@ -28,12 +24,7 @@ export default function CreateStudent() {
 
     try {
       const data = new FormData();
-      data.append("nis", datas.nis);
-      data.append("nama_siswa", datas.nama_siswa);
-      data.append("jekel", datas.jekel);
       data.append("grade_id", datas.grade_id);
-      data.append("status", datas.status);
-      data.append("th_masuk", datas.th_masuk);
 
       const response = await studentServiceStore(data);
 
@@ -71,59 +62,6 @@ export default function CreateStudent() {
               <div className="row">
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputNIS" className="form-label">
-                      NIS
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="inputNIS"
-                      placeholder="NIS"
-                      value={datas.nis}
-                      onChange={(e) =>
-                        setDatas({ ...datas, nis: e.target.value })
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="col-sm-6 mb-4">
-                  <div className="mb-3">
-                    <label htmlFor="inputNamaSiswa" className="form-label">
-                      Nama Siswa
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputNamaSiswa"
-                      placeholder="Nama Siswa"
-                      value={datas.nama_siswa}
-                      onChange={(e) =>
-                        setDatas({ ...datas, nama_siswa: e.target.value })
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="col-sm-6 mb-4">
-                  <div className="mb-3">
-                    <label htmlFor="inputJekel" className="form-label">
-                      Jenis Kelamin
-                    </label>
-                    <select
-                      className="form-select"
-                      id="inputJekel"
-                      value={datas.jekel}
-                      onChange={(e) =>
-                        setDatas({ ...datas, jekel: e.target.value })
-                      }
-                    >
-                      <option value="">Pilih Jenis Kelamin</option>
-                      <option value="LK">Laki-laki</option>
-                      <option value="PR">Perempuan</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="col-sm-6 mb-4">
-                  <div className="mb-3">
                     <label htmlFor="inputGrade" className="form-label">
                       Grade
                     </label>
@@ -143,43 +81,6 @@ export default function CreateStudent() {
                       <option value="5">5</option>
                       <option value="6">6</option>
                     </select>
-                  </div>
-                </div>
-                <div className="col-sm-6 mb-4">
-                  <div className="mb-3">
-                    <label htmlFor="inputStatus" className="form-label">
-                      Status
-                    </label>
-                    <select
-                      className="form-select"
-                      id="inputStatus"
-                      value={datas.status}
-                      onChange={(e) =>
-                        setDatas({ ...datas, status: e.target.value })
-                      }
-                    >
-                      <option value="">Pilih Status</option>
-                      <option value="Aktif">Aktif</option>
-                      <option value="Lulus">Lulus</option>
-                      <option value="Pindah">Pindah</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="col-sm-6 mb-4">
-                  <div className="mb-3">
-                    <label htmlFor="inputTahunMasuk" className="form-label">
-                      Tahun Masuk
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="inputTahunMasuk"
-                      placeholder="Tahun Masuk"
-                      value={datas.th_masuk}
-                      onChange={(e) =>
-                        setDatas({ ...datas, th_masuk: e.target.value })
-                      }
-                    />
                   </div>
                 </div>
               </div>
