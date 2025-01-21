@@ -1,25 +1,26 @@
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
+import { savingType } from "@/services/data-types/saving-type";
 import { userType } from "@/services/data-types/user-type";
-import { userServiceEdit, userServiceUpdate } from "@/services/user-service";
+import { savingServiceStore } from "@/services/saving-service";
+import { userServiceStore } from "@/services/user-service";
 import React, { useState } from "react";
 
-export default function EditUser({
-  userDetail,
-  id,
-}: {
-  userDetail: userType;
-  id: string;
-}) {
-  const [datas, setDatas] = useState<userType>(userDetail);
-
+export default function CreateSaving() {
+  const [datas, setDatas] = useState<savingType>({
+    student_id: "",
+    setor: "",
+    tarik: "",
+    tgl: "",
+    jenis: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState({
-    name: "",
-    username: "",
-    password: "",
-    password_verified_at: "",
-    level: "",
+    student_id: "",
+    setor: "",
+    tarik: "",
+    tgl: "",
+    jenis: "",
   });
 
   const onSubmit = async () => {
@@ -27,16 +28,16 @@ export default function EditUser({
 
     try {
       const data = new FormData();
-      data.append("name", datas.name);
-      data.append("username", datas.username);
-      data.append("password", datas.password);
-      data.append("konfirmpw", datas.password_verified_at);
-      data.append("level", datas.level);
+      data.append("student_id", datas.student_id);
+      data.append("setor", datas.setor);
+      data.append("tarik", datas.tarik);
+      data.append("tgl", datas.tgl);
+      data.append("jenis", datas.jenis);
 
-      const response = await userServiceUpdate(data, id);
+      const response = await savingServiceStore(data);
 
       if (!response.error) {
-        alert("User created unccessfully");
+        alert("Saving created unccessfully");
         // router.push('/user');
       } else {
         if (response.message) {
@@ -58,9 +59,9 @@ export default function EditUser({
     <>
       <Layout>
         <div className="container-fluid px-4">
-          <h1 className="mt-4">Users</h1>
+          <h1 className="mt-4">Saving</h1>
           <ol className="breadcrumb mb-4">
-            <li className="breadcrumb-item">Users</li>
+            <li className="breadcrumb-item">Saving</li>
             <li className="breadcrumb-item active">Tambah data</li>
           </ol>
 
@@ -69,94 +70,87 @@ export default function EditUser({
               <div className="row">
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputName" className="form-label">
-                      Nama
+                    <label htmlFor="inputStudentId" className="form-label">
+                      ID Siswa
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      id="inputName"
-                      placeholder={userDetail.name}
-                      value={datas.name}
+                      id="inputStudentId"
+                      placeholder="ID Siswa"
+                      value={datas.student_id}
                       onChange={(e) =>
-                        setDatas({ ...datas, name: e.target.value })
+                        setDatas({ ...datas, student_id: e.target.value })
                       }
                     />
                   </div>
                 </div>
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputUsername" className="form-label">
-                      Username
+                    <label htmlFor="inputSetor" className="form-label">
+                      Setor
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
-                      id="inputUsername"
-                      placeholder={userDetail.username}
-                      value={datas.username}
+                      id="inputSetor"
+                      placeholder="Jumlah Setor"
+                      value={datas.setor}
                       onChange={(e) =>
-                        setDatas({ ...datas, username: e.target.value })
+                        setDatas({ ...datas, setor: e.target.value })
                       }
                     />
                   </div>
                 </div>
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputPassword" className="form-label">
-                      Password
+                    <label htmlFor="inputTarik" className="form-label">
+                      Tarik
                     </label>
                     <input
-                      type="password"
+                      type="number"
                       className="form-control"
-                      id="inputPassword"
-                      placeholder={userDetail.password}
-                      value={datas.password}
+                      id="inputTarik"
+                      placeholder="Jumlah Tarik"
+                      value={datas.tarik}
                       onChange={(e) =>
-                        setDatas({ ...datas, password: e.target.value })
+                        setDatas({ ...datas, tarik: e.target.value })
                       }
                     />
                   </div>
                 </div>
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputKonfirmPw" className="form-label">
-                      Konfirmasi Password
+                    <label htmlFor="inputTgl" className="form-label">
+                      Tanggal
                     </label>
                     <input
-                      type="password"
+                      type="date"
                       className="form-control"
-                      id="inputKonfirmPw"
-                      placeholder={userDetail.password_verified_at}
-                      value={datas.password_verified_at}
+                      id="inputTgl"
+                      value={datas.tgl}
                       onChange={(e) =>
-                        setDatas({
-                          ...datas,
-                          password_verified_at: e.target.value,
-                        })
+                        setDatas({ ...datas, tgl: e.target.value })
                       }
                     />
                   </div>
                 </div>
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputLevel" className="form-label">
-                      Level
+                    <label htmlFor="inputJenis" className="form-label">
+                      Jenis
                     </label>
                     <select
                       className="form-control"
-                      id="inputKonfirmPw"
-                      value={datas.level}
+                      id="inputJenis"
+                      value={datas.jenis}
                       onChange={(e) =>
-                        setDatas({
-                          ...datas,
-                          level: e.target.value,
-                        })
+                        setDatas({ ...datas, jenis: e.target.value })
                       }
                     >
-                      <option value="">Pilih Level</option>
-                      <option value="Administrator">Administrator</option>
-                      <option value="Petugas">Petugas</option>
+                      <option value="">Pilih Jenis</option>
+                      <option value="SR">Setor</option>
+                      <option value="TR">Tarik</option>
                     </select>
                   </div>
                 </div>
@@ -174,23 +168,4 @@ export default function EditUser({
       </Layout>
     </>
   );
-}
-
-interface GetServerSideProps {
-  params: {
-    id: string;
-  };
-}
-
-export async function getServerSideProps({ params }: GetServerSideProps) {
-  const { id } = params;
-
-  const response = await userServiceEdit(id);
-
-  return {
-    props: {
-      userDetail: response.data,
-      id: id,
-    },
-  };
 }

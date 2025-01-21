@@ -40,3 +40,12 @@ export async function studentServiceUpdate(data: FormData, id: string) {
     data,
   });
 }
+
+export async function studentServiceDestroy(id: string) {
+  const url = `${ROOT_API}/${API_VERSION}/student/${id}`;
+
+  return callAPI({
+    url,
+    method: "DELETE",
+  });
+}

@@ -1,8 +1,8 @@
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
 import { studentType } from "@/services/data-types/student-type";
+import { studentServiceEdit } from "@/services/student-service";
 import { studentServiceUpdate } from "@/services/student-service";
-import { userServiceEdit, userServiceUpdate } from "@/services/user-service";
 import React, { useState } from "react";
 
 export default function EditStudent({
@@ -207,11 +207,11 @@ interface GetServerSideProps {
 export async function getServerSideProps({ params }: GetServerSideProps) {
   const { id } = params;
 
-  const response = await userServiceEdit(id);
+  const response = await studentServiceEdit(id);
 
   return {
     props: {
-      userDetail: response.data,
+      studentDetail: response.data,
       id: id,
     },
   };

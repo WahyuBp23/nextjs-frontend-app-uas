@@ -16,10 +16,8 @@ export default function EditUser({
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState({
     name: "",
-    username: "",
-    password: "",
-    password_verified_at: "",
-    level: "",
+    email: "",
+    birthdate: "",
   });
 
   const onSubmit = async () => {
@@ -28,10 +26,8 @@ export default function EditUser({
     try {
       const data = new FormData();
       data.append("name", datas.name);
-      data.append("username", datas.username);
-      data.append("password", datas.password);
-      data.append("konfirmpw", datas.password_verified_at);
-      data.append("level", datas.level);
+      data.append("email", datas.email || "");
+      data.append("birthdate", datas.birthdate || "");
 
       const response = await userServiceUpdate(data, id);
 
@@ -86,78 +82,36 @@ export default function EditUser({
                 </div>
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputUsername" className="form-label">
-                      Username
+                    <label htmlFor="inputEmail" className="form-label">
+                      Alamat Email
                     </label>
                     <input
-                      type="text"
+                      type="email"
                       className="form-control"
-                      id="inputUsername"
-                      placeholder={userDetail.username}
-                      value={datas.username}
+                      id="inputEmail"
+                      placeholder={userDetail.email}
+                      value={datas.email}
                       onChange={(e) =>
-                        setDatas({ ...datas, username: e.target.value })
+                        setDatas({ ...datas, email: e.target.value })
                       }
                     />
                   </div>
                 </div>
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputPassword" className="form-label">
-                      Password
+                    <label htmlFor="inputBirthdate" className="form-label">
+                      Birthdate
                     </label>
                     <input
-                      type="password"
+                      type="date"
                       className="form-control"
-                      id="inputPassword"
-                      placeholder={userDetail.password}
-                      value={datas.password}
+                      id="inputBirthdate"
+                      placeholder=""
+                      value={datas.birthdate}
                       onChange={(e) =>
-                        setDatas({ ...datas, password: e.target.value })
+                        setDatas({ ...datas, birthdate: e.target.value })
                       }
                     />
-                  </div>
-                </div>
-                <div className="col-sm-6 mb-4">
-                  <div className="mb-3">
-                    <label htmlFor="inputKonfirmPw" className="form-label">
-                      Konfirmasi Password
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="inputKonfirmPw"
-                      placeholder={userDetail.password_verified_at}
-                      value={datas.password_verified_at}
-                      onChange={(e) =>
-                        setDatas({
-                          ...datas,
-                          password_verified_at: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="col-sm-6 mb-4">
-                  <div className="mb-3">
-                    <label htmlFor="inputLevel" className="form-label">
-                      Level
-                    </label>
-                    <select
-                      className="form-control"
-                      id="inputKonfirmPw"
-                      value={datas.level}
-                      onChange={(e) =>
-                        setDatas({
-                          ...datas,
-                          level: e.target.value,
-                        })
-                      }
-                    >
-                      <option value="">Pilih Level</option>
-                      <option value="Administrator">Administrator</option>
-                      <option value="Petugas">Petugas</option>
-                    </select>
                   </div>
                 </div>
               </div>
