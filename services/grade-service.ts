@@ -3,8 +3,8 @@ import callAPI from "@/config/api";
 const ROOT_API = process.env.NEXT_PUBLIC_API;
 const API_VERSION = "api/v1";
 
-export async function studentService() {
-  const url = `${ROOT_API}/${API_VERSION}/student`;
+export async function gradeService() {
+  const url = `${ROOT_API}/${API_VERSION}/grade`;
 
   return callAPI({
     url,
@@ -12,8 +12,8 @@ export async function studentService() {
     isToken: true,
   });
 }
-export async function studentServiceStore(data: FormData) {
-  const url = `${ROOT_API}/${API_VERSION}/student`;
+export async function gradeServiceStore(data: FormData) {
+  const url = `${ROOT_API}/${API_VERSION}/grade`;
 
   return callAPI({
     url,
@@ -22,8 +22,8 @@ export async function studentServiceStore(data: FormData) {
   });
 }
 
-export async function studentServiceEdit(id: string) {
-  const url = `${ROOT_API}/${API_VERSION}/student/${id}/edit`;
+export async function gradeServiceEdit(id: string) {
+  const url = `${ROOT_API}/${API_VERSION}/grade/${id}/edit`;
 
   return callAPI({
     url,
@@ -31,8 +31,8 @@ export async function studentServiceEdit(id: string) {
   });
 }
 
-export async function studentServiceUpdate(data: FormData, id: string) {
-  const url = `${ROOT_API}/${API_VERSION}/student/${id}`;
+export async function gradeServiceUpdate(data: FormData, id: string) {
+  const url = `${ROOT_API}/${API_VERSION}/grade/${id}`;
 
   return callAPI({
     url,

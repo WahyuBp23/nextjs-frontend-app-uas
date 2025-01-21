@@ -1,4 +1,4 @@
-export interface studentType {
+export interface gradeType {
   id?: number;
   grade: string;
   created_at?: string;
