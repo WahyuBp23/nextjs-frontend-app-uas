@@ -87,8 +87,8 @@ export default function Savings() {
                       <th scope="row">{index + 1}</th>
                       <td>{item.tgl}</td>
                       <td>{item.student_id}</td>
-                      <td>{item.setor}</td>
-                      <td>{item.tarik}</td>
+                      <td>Rp {item.setor.toLocaleString()}</td>
+                      <td>Rp {item.tarik.toLocaleString()}</td>
                       <td>{item.jenis}</td>
                       <td>
                         <Button

@@ -1,44 +1,45 @@
+import React, { useState } from "react";
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
 import { studentType } from "@/services/data-types/student-type";
-import { studentServiceStore } from "@/services/student-service";
-import React, { useState } from "react";
+import { savingType } from "@/services/data-types/saving-type";
+import {
+  savingServiceEdit,
+  savingServiceUpdate,
+} from "@/services/saving-service";
 
-export default function CreateStudent() {
-  const [datas, setDatas] = useState<studentType>({
-    nis: "",
-    nama_siswa: "",
-    jekel: "",
-    grade_id: "",
-    status: "",
-    th_masuk: "",
-  });
+export default function EditSaving({
+  savingDetail,
+  id,
+}: {
+  savingDetail: savingType;
+  id: string;
+}) {
+  const [datas, setDatas] = useState<savingType>(savingDetail);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState({
-    nis: "",
-    nama_siswa: "",
-    jekel: "",
-    grade_id: "",
-    status: "",
-    th_masuk: "",
+    student_id: "",
+    setor: "",
+    tarik: "",
+    tgl: "",
+    jenis: "",
   });
-
   const onSubmit = async () => {
     setIsLoading(true);
 
     try {
       const data = new FormData();
-      data.append("nis", datas.nis);
-      data.append("nama_siswa", datas.nama_siswa);
-      data.append("jekel", datas.jekel);
-      data.append("grade_id", datas.grade_id);
-      data.append("status", datas.status);
-      data.append("th_masuk", datas.th_masuk);
+      data.append("student_id", datas.student_id);
+      data.append("setor", datas.setor);
+      data.append("tarik", datas.tarik);
+      data.append("tgl", datas.tgl);
+      data.append("jenis", datas.jenis);
 
-      const response = await studentServiceStore(data);
+      const response = await savingServiceUpdate(data, id);
 
       if (!response.error) {
-        alert("Student created unccessfully");
+        alert("Saving created unccessfully");
         // router.push('/user');
       } else {
         if (response.message) {
@@ -63,9 +64,8 @@ export default function CreateStudent() {
           <h1 className="mt-4">Students</h1>
           <ol className="breadcrumb mb-4">
             <li className="breadcrumb-item">Students</li>
-            <li className="breadcrumb-item active">Tambah data</li>
+            <li className="breadcrumb-item active">Update data</li>
           </ol>
-
           <div className="card-body">
             <form action="">
               <div className="row">
@@ -75,13 +75,13 @@ export default function CreateStudent() {
                       NIS
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       id="inputNIS"
-                      placeholder="nis"
-                      value={datas.nis}
+                      placeholder={savingDetail.student_id}
+                      value={datas.student_id}
                       onChange={(e) =>
-                        setDatas({ ...datas, nis: e.target.value })
+                        setDatas({ ...datas, student_id: e.target.value })
                       }
                     />
                   </div>
@@ -95,10 +95,10 @@ export default function CreateStudent() {
                       type="text"
                       className="form-control"
                       id="inputNamaSiswa"
-                      placeholder="Nama Siswa"
-                      value={datas.nama_siswa}
+                      placeholder={savingDetail.setor}
+                      value={datas.setor}
                       onChange={(e) =>
-                        setDatas({ ...datas, nama_siswa: e.target.value })
+                        setDatas({ ...datas, setor: e.target.value })
                       }
                     />
                   </div>
@@ -111,9 +111,9 @@ export default function CreateStudent() {
                     <select
                       className="form-select"
                       id="inputJekel"
-                      value={datas.jekel}
+                      value={datas.tgl}
                       onChange={(e) =>
-                        setDatas({ ...datas, jekel: e.target.value })
+                        setDatas({ ...datas, tgl: e.target.value })
                       }
                     >
                       <option value="">Pilih Jenis Kelamin</option>
@@ -130,9 +130,9 @@ export default function CreateStudent() {
                     <select
                       className="form-select"
                       id="inputGrade"
-                      value={datas.grade_id}
+                      value={datas.jenis}
                       onChange={(e) =>
-                        setDatas({ ...datas, grade_id: e.target.value })
+                        setDatas({ ...datas, jenis: e.target.value })
                       }
                     >
                       <option value="">Pilih Grade</option>
@@ -143,43 +143,6 @@ export default function CreateStudent() {
                       <option value="5">5</option>
                       <option value="6">6</option>
                     </select>
-                  </div>
-                </div>
-                <div className="col-sm-6 mb-4">
-                  <div className="mb-3">
-                    <label htmlFor="inputStatus" className="form-label">
-                      Status
-                    </label>
-                    <select
-                      className="form-select"
-                      id="inputStatus"
-                      value={datas.status}
-                      onChange={(e) =>
-                        setDatas({ ...datas, status: e.target.value })
-                      }
-                    >
-                      <option value="">Pilih Status</option>
-                      <option value="Aktif">Aktif</option>
-                      <option value="Lulus">Lulus</option>
-                      <option value="Pindah">Pindah</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="col-sm-6 mb-4">
-                  <div className="mb-3">
-                    <label htmlFor="inputTahunMasuk" className="form-label">
-                      Tahun Masuk
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="inputTahunMasuk"
-                      placeholder="Tahun Masuk"
-                      value={datas.th_masuk}
-                      onChange={(e) =>
-                        setDatas({ ...datas, th_masuk: e.target.value })
-                      }
-                    />
                   </div>
                 </div>
               </div>
@@ -196,4 +159,23 @@ export default function CreateStudent() {
       </Layout>
     </>
   );
+}
+
+interface GetServerSideProps {
+  params: {
+    id: string;
+  };
+}
+
+export async function getServerSideProps({ params }: GetServerSideProps) {
+  const { id } = params;
+
+  const response = await savingServiceEdit(id);
+
+  return {
+    props: {
+      savingDetail: response.data,
+      id: id,
+    },
+  };
 }

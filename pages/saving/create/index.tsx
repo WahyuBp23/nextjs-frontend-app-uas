@@ -1,10 +1,8 @@
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
 import { savingType } from "@/services/data-types/saving-type";
-import { userType } from "@/services/data-types/user-type";
 import { savingServiceStore } from "@/services/saving-service";
-import { userServiceStore } from "@/services/user-service";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function CreateSaving() {
   const [datas, setDatas] = useState<savingType>({
@@ -70,14 +68,14 @@ export default function CreateSaving() {
               <div className="row">
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputStudentId" className="form-label">
-                      ID Siswa
+                    <label htmlFor="inputNis" className="form-label">
+                      Nis
                     </label>
                     <input
                       type="text"
                       className="form-control"
-                      id="inputStudentId"
-                      placeholder="ID Siswa"
+                      id="inputNis"
+                      placeholder="NIS"
                       value={datas.student_id}
                       onChange={(e) =>
                         setDatas({ ...datas, student_id: e.target.value })
@@ -91,13 +89,18 @@ export default function CreateSaving() {
                       Setor
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
                       id="inputSetor"
                       placeholder="Jumlah Setor"
-                      value={datas.setor}
+                      value={`Rp ${datas.setor.toLocaleString()}`}
                       onChange={(e) =>
-                        setDatas({ ...datas, setor: e.target.value })
+                        setDatas({
+                          ...datas,
+                          setor: e.target.value
+                            .replace("Rp", "")
+                            .replace(/\D/g, ""),
+                        })
                       }
                     />
                   </div>
@@ -108,13 +111,18 @@ export default function CreateSaving() {
                       Tarik
                     </label>
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
                       id="inputTarik"
                       placeholder="Jumlah Tarik"
-                      value={datas.tarik}
+                      value={`Rp ${datas.tarik.toLocaleString()}`}
                       onChange={(e) =>
-                        setDatas({ ...datas, tarik: e.target.value })
+                        setDatas({
+                          ...datas,
+                          tarik: e.target.value
+                            .replace("Rp", "")
+                            .replace(/\D/g, ""),
+                        })
                       }
                     />
                   </div>
@@ -138,18 +146,18 @@ export default function CreateSaving() {
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
                     <label htmlFor="inputJenis" className="form-label">
-                      Jenis
+                      Jenis Transaksi
                     </label>
                     <select
-                      className="form-control"
+                      className="form-select"
                       id="inputJenis"
                       value={datas.jenis}
                       onChange={(e) =>
                         setDatas({ ...datas, jenis: e.target.value })
                       }
                     >
-                      <option value="">Pilih Jenis</option>
-                      <option value="SR">Setor</option>
+                      <option value="">Pilih Jenis Transaksi</option>
+                      <option value="ST">Setor</option>
                       <option value="TR">Tarik</option>
                     </select>
                   </div>

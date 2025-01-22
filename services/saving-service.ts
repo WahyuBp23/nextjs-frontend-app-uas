@@ -23,7 +23,7 @@ export async function savingServiceStore(data: FormData) {
   });
 }
 
-export async function serviceServiceEdit(id: string) {
+export async function savingServiceEdit(id: string) {
   const url = `${ROOT_API}/${API_VERSION}/saving/${id}/edit`;
 
   return callAPI({
