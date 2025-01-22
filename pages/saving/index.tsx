@@ -19,6 +19,7 @@ export default function Savings() {
 
       if (response.error) {
         alert(response.message);
+        window.location.href = "/saving";
       } else {
         setStudent(response.data);
       }

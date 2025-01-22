@@ -30,7 +30,7 @@ export default function EditGrade({
 
       if (!response.error) {
         alert("Grade created unccessfully");
-        // router.push('/user');
+        window.location.href = "/grade";
       } else {
         if (response.message) {
           Object.entries(response.message).forEach(([key, value]) => {

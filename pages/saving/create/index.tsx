@@ -17,6 +17,7 @@ export default function CreateSaving() {
 
       if (response.error) {
         alert(response.message);
+        window.location.href = "/saving";
       } else {
         setStudent(response.data);
       }

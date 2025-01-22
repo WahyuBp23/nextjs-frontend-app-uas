@@ -65,7 +65,7 @@ export default function CreateStudent() {
 
       if (!response.error) {
         alert("Student created unccessfully");
-        // router.push('/user');
+        window.location.href = "/";
       } else {
         if (response.message) {
           Object.entries(response.message).forEach(([key, value]) => {

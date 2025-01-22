@@ -37,7 +37,7 @@ export default function EditUser({
 
       if (!response.error) {
         alert("User created unccessfully");
-        // router.push('/user');
+        window.location.href = "/user";
       } else {
         if (response.message) {
           Object.entries(response.message).forEach(([key, value]) => {
