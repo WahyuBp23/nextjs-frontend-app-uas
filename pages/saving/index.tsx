@@ -5,8 +5,34 @@ import { useCallback, useEffect, useState } from "react";
 import { savingType } from "@/services/data-types/saving-type";
 import { savingService } from "@/services/saving-service";
 import Button from "@/components/atoms/Button";
+import { studentType } from "@/services/data-types/student-type";
+import { studentService } from "@/services/student-service";
 
 export default function Savings() {
+  const [student, setStudent] = useState<studentType[]>([]);
+
+  const getStudent = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await studentService();
+
+      if (response.error) {
+        alert(response.message);
+      } else {
+        setStudent(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    getStudent();
+  }, [getStudent]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [savings, setSavings] = useState<savingType[]>([]);
 
@@ -74,7 +100,8 @@ export default function Savings() {
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Tanggal</th>
-                    <th scope="col">Siswa</th>
+                    <th scope="col">Nis</th>
+                    <th scope="col">Nama Siswa</th>
                     <th scope="col">Setor</th>
                     <th scope="col">Tarik</th>
                     <th scope="col">Jenis</th>
@@ -86,32 +113,26 @@ export default function Savings() {
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
                       <td>{item.tgl}</td>
-                      <td>{item.student_id}</td>
+                      {student.map((student) => (
+                        <td>{student.nis}</td>
+                      ))}
+                      {student.map((student) => (
+                        <td>{student.nama_siswa}</td>
+                      ))}
                       <td>Rp {item.setor.toLocaleString()}</td>
                       <td>Rp {item.tarik.toLocaleString()}</td>
                       <td>{item.jenis}</td>
                       <td>
                         <Button
-                          type="button"
-                          // onClickButton={
-                          //   () => handleDetail(item.id)
-                          // }
-                          className={["btn btn-success btn-sm me-2"]}
-                        >
-                          Detail
-                        </Button>
-                        <Button
                           type="link"
-                          href={`saving/edit/${item.student_id}`}
+                          href={`saving/edit/${item.id}`}
                           className={["btn btn-warning btn-sm me-2"]}
                         >
                           Update
                         </Button>
                         <Button
                           type="link"
-                          // onClickButton={
-                          //   () => handleDetele(item.id)
-                          // }
+                          href={`saving/delete/${item.id}`}
                           className={["btn btn-danger btn-sm me-2"]}
                         >
                           delete

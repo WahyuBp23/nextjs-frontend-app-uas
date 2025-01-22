@@ -41,14 +41,14 @@ export default function Grades() {
       </Head>
       <Layout>
         <div className="container-fluid px-4">
-          <h1 className="mt-4">Users</h1>
+          <h1 className="mt-4">Grade</h1>
           <ol className="breadcrumb mb-4">
-            <li className="breadcrumb-item active">Users</li>
+            <li className="breadcrumb-item active">Grade</li>
           </ol>
           <div className="card mb-4">
             <div className="card-header">
               <i className="fas fa-table me-1"></i>
-              Data Users{" "}
+              Data Grade{" "}
               <div className="d-flex justify-content-end gap-1">
                 <Button
                   type="button"
@@ -83,15 +83,6 @@ export default function Grades() {
                       <td>{item.grade}</td>
                       <td>
                         <Button
-                          type="button"
-                          // onClickButton={
-                          //   () => handleDetail(item.id)
-                          // }
-                          className={["btn btn-success btn-sm me-2"]}
-                        >
-                          Detail
-                        </Button>
-                        <Button
                           type="link"
                           href={`grade/edit/${item.id}`}
                           className={["btn btn-warning btn-sm me-2"]}
@@ -100,9 +91,7 @@ export default function Grades() {
                         </Button>
                         <Button
                           type="link"
-                          // onClickButton={
-                          //   () => handleDetele(item.id)
-                          // }
+                          href={`grade/delete/${item.id}`}
                           className={["btn btn-danger btn-sm me-2"]}
                         >
                           delete

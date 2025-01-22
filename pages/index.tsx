@@ -4,8 +4,34 @@ import { useCallback, useEffect, useState } from "react";
 import Button from "@/components/atoms/Button";
 import { studentType } from "@/services/data-types/student-type";
 import { studentService } from "@/services/student-service";
+import { gradeType } from "@/services/data-types/grade-type";
+import { gradeService } from "@/services/grade-service";
 
 export default function Home() {
+  const [grade, setGrade] = useState<gradeType[]>([]);
+
+  const getGrade = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await gradeService();
+
+      if (response.error) {
+        alert(response.message);
+      } else {
+        setGrade(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    getGrade();
+  }, [getGrade]);
+
   const [isLoading, setIsLoading] = useState(false);
   const [student, setStudent] = useState<studentType[]>([]);
 
@@ -88,19 +114,12 @@ export default function Home() {
                       <td>{item.nis}</td>
                       <td>{item.nama_siswa}</td>
                       <td>{item.jekel}</td>
-                      <td>{item.grade_id}</td>
+                      {grade.map((grade) => (
+                        <td>{grade.grade}</td>
+                      ))}
                       <td>{item.status}</td>
                       <td>{item.th_masuk}</td>
                       <td>
-                        <Button
-                          type="button"
-                          // onClickButton={
-                          //   () => handleDetail(item.id)
-                          // }
-                          className={["btn btn-success btn-sm me-2"]}
-                        >
-                          Detail
-                        </Button>
                         <Button
                           type="link"
                           href={`student/edit/${item.id}`}
@@ -110,9 +129,7 @@ export default function Home() {
                         </Button>
                         <Button
                           type="link"
-                          // onClickButton={
-                          //   () => handleDelete(item.id)
-                          // }
+                          href={`student/delete/${item.id}`}
                           className={["btn btn-danger btn-sm me-2"]}
                         >
                           delete

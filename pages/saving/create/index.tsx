@@ -1,10 +1,36 @@
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
 import { savingType } from "@/services/data-types/saving-type";
+import { studentType } from "@/services/data-types/student-type";
 import { savingServiceStore } from "@/services/saving-service";
-import React, { useState, useEffect } from "react";
+import { studentService } from "@/services/student-service";
+import React, { useState, useEffect, useCallback } from "react";
 
 export default function CreateSaving() {
+  const [student, setStudent] = useState<studentType[]>([]);
+
+  const getStudent = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await studentService();
+
+      if (response.error) {
+        alert(response.message);
+      } else {
+        setStudent(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    getStudent();
+  }, [getStudent]);
+
   const [datas, setDatas] = useState<savingType>({
     student_id: "",
     setor: "",
@@ -68,19 +94,24 @@ export default function CreateSaving() {
               <div className="row">
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputNis" className="form-label">
-                      Nis
+                    <label htmlFor="inputGrade" className="form-label">
+                      Grade
                     </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputNis"
-                      placeholder="NIS"
+                    <select
+                      className="form-select"
+                      id="inputGrade"
                       value={datas.student_id}
                       onChange={(e) =>
                         setDatas({ ...datas, student_id: e.target.value })
                       }
-                    />
+                    >
+                      <option value="">Pilih Nis</option>
+                      {student.map((student) => (
+                        <option key={student.id} value={student.id}>
+                          {student.nis} - {student.nama_siswa}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
                 <div className="col-sm-6 mb-4">
