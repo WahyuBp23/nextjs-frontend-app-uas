@@ -114,9 +114,11 @@ export default function Home() {
                       <td>{item.nis}</td>
                       <td>{item.nama_siswa}</td>
                       <td>{item.jekel}</td>
-                      {grade.map((grade) => (
-                        <td>{grade.grade}</td>
-                      ))}
+                      <td>
+                        {grade.find(
+                          (grade) => grade.id === parseInt(item.grade_id)
+                        )?.grade || "Tidak Ditemukan"}
+                      </td>
                       <td>{item.status}</td>
                       <td>{item.th_masuk}</td>
                       <td>

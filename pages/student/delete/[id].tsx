@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
-import { userType } from "@/services/data-types/user-type";
-import { userServiceDestroy, userServiceEdit } from "@/services/user-service";
 import { studentType } from "@/services/data-types/student-type";
 import {
   studentServiceDestroy,
@@ -65,9 +63,9 @@ export default function DeleteStudent({
     <>
       <Layout>
         <div className="container-fluid px-4">
-          <h1 className="mt-4">Users</h1>
+          <h1 className="mt-4">Student</h1>
           <ol className="breadcrumb mb-4">
-            <li className="breadcrumb-item">Users</li>
+            <li className="breadcrumb-item">Student</li>
             <li className="breadcrumb-item active">Hapus data</li>
           </ol>
 

@@ -95,7 +95,7 @@ export default function CreateSaving() {
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
                     <label htmlFor="inputGrade" className="form-label">
-                      Grade
+                      NIS
                     </label>
                     <select
                       className="form-select"

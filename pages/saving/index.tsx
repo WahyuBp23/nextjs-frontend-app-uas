@@ -113,12 +113,16 @@ export default function Savings() {
                     <tr key={index}>
                       <th scope="row">{index + 1}</th>
                       <td>{item.tgl}</td>
-                      {student.map((student) => (
-                        <td>{student.nis}</td>
-                      ))}
-                      {student.map((student) => (
-                        <td>{student.nama_siswa}</td>
-                      ))}
+                      <td>
+                        {student.find(
+                          (student) => student.id === parseInt(item.student_id)
+                        )?.nis || "Tidak Ditemukan"}
+                      </td>
+                      <td>
+                        {student.find(
+                          (student) => student.id === parseInt(item.student_id)
+                        )?.nama_siswa || "Tidak Ditemukan"}
+                      </td>
                       <td>Rp {item.setor.toLocaleString()}</td>
                       <td>Rp {item.tarik.toLocaleString()}</td>
                       <td>{item.jenis}</td>
