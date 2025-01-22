@@ -42,7 +42,7 @@ export async function gradeServiceUpdate(data: FormData, id: string) {
   });
 }
 
-export async function savingServiceDestroy(id: string) {
+export async function gradeServiceDestroy(id: string) {
   const url = `${ROOT_API}/${API_VERSION}/grade/${id}`;
 
   return callAPI({

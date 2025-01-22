@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
 import { studentType } from "@/services/data-types/student-type";
@@ -7,6 +7,7 @@ import {
   savingServiceEdit,
   savingServiceUpdate,
 } from "@/services/saving-service";
+import { studentService } from "@/services/student-service";
 
 export default function EditSaving({
   savingDetail,
@@ -15,6 +16,30 @@ export default function EditSaving({
   savingDetail: savingType;
   id: string;
 }) {
+  const [student, setStudent] = useState<studentType[]>([]);
+
+  const getStudent = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await studentService();
+
+      if (response.error) {
+        alert(response.message);
+      } else {
+        setStudent(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    getStudent();
+  }, [getStudent]);
+
   const [datas, setDatas] = useState<savingType>(savingDetail);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -61,9 +86,9 @@ export default function EditSaving({
     <>
       <Layout>
         <div className="container-fluid px-4">
-          <h1 className="mt-4">Students</h1>
+          <h1 className="mt-4">Savings</h1>
           <ol className="breadcrumb mb-4">
-            <li className="breadcrumb-item">Students</li>
+            <li className="breadcrumb-item">Saving</li>
             <li className="breadcrumb-item active">Update data</li>
           </ol>
           <div className="card-body">
@@ -74,74 +99,99 @@ export default function EditSaving({
                     <label htmlFor="inputNIS" className="form-label">
                       NIS
                     </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="inputNIS"
-                      placeholder={savingDetail.student_id}
+                    <select
+                      className="form-select"
+                      id="inputGrade"
                       value={datas.student_id}
                       onChange={(e) =>
                         setDatas({ ...datas, student_id: e.target.value })
                       }
-                    />
-                  </div>
-                </div>
-                <div className="col-sm-6 mb-4">
-                  <div className="mb-3">
-                    <label htmlFor="inputNamaSiswa" className="form-label">
-                      Nama Siswa
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="inputNamaSiswa"
-                      placeholder={savingDetail.setor}
-                      value={datas.setor}
-                      onChange={(e) =>
-                        setDatas({ ...datas, setor: e.target.value })
-                      }
-                    />
-                  </div>
-                </div>
-                <div className="col-sm-6 mb-4">
-                  <div className="mb-3">
-                    <label htmlFor="inputJekel" className="form-label">
-                      Jenis Kelamin
-                    </label>
-                    <select
-                      className="form-select"
-                      id="inputJekel"
-                      value={datas.tgl}
-                      onChange={(e) =>
-                        setDatas({ ...datas, tgl: e.target.value })
-                      }
                     >
-                      <option value="">Pilih Jenis Kelamin</option>
-                      <option value="LK">Laki-laki</option>
-                      <option value="PR">Perempuan</option>
+                      <option value="">Pilih Nis</option>
+                      {student.map((student) => (
+                        <option key={student.id} value={student.id}>
+                          {student.nis} - {student.nama_siswa}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
                 <div className="col-sm-6 mb-4">
                   <div className="mb-3">
-                    <label htmlFor="inputGrade" className="form-label">
-                      Grade
+                    <label htmlFor="inputSetor" className="form-label">
+                      Setor
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="inputSetor"
+                      placeholder="Jumlah Setor"
+                      value={`Rp ${datas.setor.toLocaleString()}`}
+                      onChange={(e) =>
+                        setDatas({
+                          ...datas,
+                          setor: e.target.value
+                            .replace("Rp", "")
+                            .replace(/\D/g, ""),
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="col-sm-6 mb-4">
+                  <div className="mb-3">
+                    <label htmlFor="inputTarik" className="form-label">
+                      Tarik
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="inputTarik"
+                      placeholder="Jumlah Tarik"
+                      value={`Rp ${datas.tarik.toLocaleString()}`}
+                      onChange={(e) =>
+                        setDatas({
+                          ...datas,
+                          tarik: e.target.value
+                            .replace("Rp", "")
+                            .replace(/\D/g, ""),
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="col-sm-6 mb-4">
+                  <div className="mb-3">
+                    <label htmlFor="inputTgl" className="form-label">
+                      Tanggal
+                    </label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="inputTgl"
+                      value={datas.tgl}
+                      onChange={(e) =>
+                        setDatas({ ...datas, tgl: e.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="col-sm-6 mb-4">
+                  <div className="mb-3">
+                    <label htmlFor="inputJenis" className="form-label">
+                      Jenis Transaksi
                     </label>
                     <select
                       className="form-select"
-                      id="inputGrade"
+                      id="inputJenis"
                       value={datas.jenis}
                       onChange={(e) =>
                         setDatas({ ...datas, jenis: e.target.value })
                       }
                     >
-                      <option value="">Pilih Grade</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
+                      <option value="">Pilih Jenis Transaksi</option>
+                      <option value="ST">Setor</option>
+                      <option value="TR">Tarik</option>
                     </select>
                   </div>
                 </div>

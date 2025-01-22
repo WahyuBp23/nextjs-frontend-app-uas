@@ -88,15 +88,6 @@ export default function Users() {
                       <td>{item.level}</td>
                       <td>
                         <Button
-                          type="button"
-                          // onClickButton={
-                          //   () => handleDetail(item.id)
-                          // }
-                          className={["btn btn-success btn-sm me-2"]}
-                        >
-                          Detail
-                        </Button>
-                        <Button
                           type="link"
                           href={`user/edit/${item.id}`}
                           className={["btn btn-warning btn-sm me-2"]}
@@ -105,9 +96,7 @@ export default function Users() {
                         </Button>
                         <Button
                           type="link"
-                          // onClickButton={
-                          //   () => handleDetele(item.id)
-                          // }
+                          href={`user/delete/${item.id}`}
                           className={["btn btn-danger btn-sm me-2"]}
                         >
                           delete

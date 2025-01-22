@@ -1,10 +1,36 @@
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
+import { gradeType } from "@/services/data-types/grade-type";
 import { studentType } from "@/services/data-types/student-type";
+import { gradeService } from "@/services/grade-service";
 import { studentServiceStore } from "@/services/student-service";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export default function CreateStudent() {
+  const [grade, setGrade] = useState<gradeType[]>([]);
+
+  const getStudent = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await gradeService();
+
+      if (response.error) {
+        alert(response.message);
+      } else {
+        setGrade(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    getStudent();
+  }, [getStudent]);
+
   const [datas, setDatas] = useState<studentType>({
     nis: "",
     nama_siswa: "",
@@ -136,12 +162,11 @@ export default function CreateStudent() {
                       }
                     >
                       <option value="">Pilih Grade</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
+                      {grade.map((grade) => (
+                        <option key={grade.id} value={grade.id}>
+                          {grade.grade}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>

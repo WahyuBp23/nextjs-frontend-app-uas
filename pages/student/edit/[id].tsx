@@ -1,9 +1,11 @@
 import Button from "@/components/atoms/Button";
 import Layout from "@/components/organisms/Layout";
+import { gradeType } from "@/services/data-types/grade-type";
 import { studentType } from "@/services/data-types/student-type";
+import { gradeService } from "@/services/grade-service";
 import { studentServiceEdit } from "@/services/student-service";
 import { studentServiceUpdate } from "@/services/student-service";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export default function EditStudent({
   studentDetail,
@@ -12,6 +14,29 @@ export default function EditStudent({
   studentDetail: studentType;
   id: string;
 }) {
+  const [grade, setGrade] = useState<gradeType[]>([]);
+
+  const getGrade = useCallback(async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await gradeService();
+
+      if (response.error) {
+        alert(response.message);
+      } else {
+        setGrade(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+  useEffect(() => {
+    getGrade();
+  }, [getGrade]);
+
   const [datas, setDatas] = useState<studentType>(studentDetail);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -136,12 +161,11 @@ export default function EditStudent({
                       }
                     >
                       <option value="">Pilih Grade</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
+                      {grade.map((grade) => (
+                        <option key={grade.id} value={grade.id}>
+                          {grade.grade}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
