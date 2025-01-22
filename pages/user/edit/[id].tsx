@@ -61,7 +61,7 @@ export default function EditUser({
           <h1 className="mt-4">Users</h1>
           <ol className="breadcrumb mb-4">
             <li className="breadcrumb-item">Users</li>
-            <li className="breadcrumb-item active">Tambah data</li>
+            <li className="breadcrumb-item active">Edit data</li>
           </ol>
 
           <div className="card-body">

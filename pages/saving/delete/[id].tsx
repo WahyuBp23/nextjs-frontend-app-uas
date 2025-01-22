@@ -98,12 +98,16 @@ export default function DeleteSaving({
               <div className="row">
                 <div className="col-sm-7 mb-4">
                   <div className="mb-3"></div>
-                  {student.map((student) => (
-                    <h3>
-                      Apakah Anda Ingin Menghapus Tabungan dari Siswa{" "}
-                      {student.nis} - {student.nama_siswa}
-                    </h3>
-                  ))}
+                  {student
+                    .filter(
+                      (student) => student.id === parseInt(datas.student_id)
+                    )
+                    .map((student) => (
+                      <h3>
+                        Apakah Anda Ingin Menghapus Tabungan dari Siswa{" "}
+                        {student.nis} - {student.nama_siswa}
+                      </h3>
+                    ))}
                   <Button
                     type="button"
                     onClickButton={onSubmit}
