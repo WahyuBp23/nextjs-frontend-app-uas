@@ -64,7 +64,7 @@ export default function DeleteGrade({
               <div className="row">
                 <div className="col-sm-7 mb-4">
                   <div className="mb-3"></div>
-                  <h1>Apakah Anda Ingin Menghapus grade ini</h1>
+                  <h1>Apakah Anda Ingin Menghapus grade {datas.grade}</h1>
                   <Button
                     type="button"
                     onClickButton={onDelete}
